@@ -7,31 +7,24 @@ namespace Better.Repositories
 {
     public class BetRepository : IBetRepository
     {
-        public async Task<string> AddBet(Bet bet, float odd)
+        public string AddBet(Bet bet, float odd)
         {
-            try
-            {
-                Validator.ValidateBet(bet, odd);
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
+            Validator.ValidateBet(bet, odd);
 
-            var allEvents = await Helper.GetAllEventsFromFile();
+            var allEvents = Helper.GetAllEventsFromFile();
             var betEvent = allEvents.FirstOrDefault(e => e.Id == bet.EventId);
 
             var betOdd = betEvent?.Odds?.OrderBy(o => Math.Abs(o.Value - odd)).First();
             bet.OddId = betOdd.Id;
 
-            await Helper.SaveBetToFile(bet);
+            Helper.SaveBetToFile(bet);
 
             return "Bet was successfully placed.";
         }
 
-        public async Task<List<BetLog>> GetAllBetsLogs()
+        public List<BetLog> GetAllBetsLogs()
         {
-            var bets = await Helper.GetAllBetsFromFile();
+            var bets = Helper.GetAllBetsFromFile();
             var betLogs = new List<BetLog>();
 
             foreach (var bet in bets)

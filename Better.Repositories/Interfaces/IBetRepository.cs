@@ -5,7 +5,7 @@ namespace Better.Repositories.Interfaces
 {
     public interface IBetRepository
     {
-        Task<string> AddBet(Bet bet, float odd);
-        Task<List<BetLog>> GetAllBetsLogs();
+        string AddBet(Bet bet, float odd);
+        List<BetLog> GetAllBetsLogs();
     }
 }

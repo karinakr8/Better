@@ -1,3 +1,4 @@
+using Better.Middlewares;
 using Better.Repositories;
 using Better.Repositories.Interfaces;
 using Better.Services;
@@ -22,6 +23,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.ConfigureCustomExceptionMiddleware();
 
 app.UseHttpsRedirection();
 

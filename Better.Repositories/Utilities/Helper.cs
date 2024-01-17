@@ -8,55 +8,55 @@ namespace Better.Repositories.Utilities
         private static readonly string betLogsFilePath = "BetterData/betsLogs.json";
         private static readonly string eventsFilePath = "BetterData/Events.json";
         private static readonly string playersFilePath = "BetterData/Players.json";
-        public static async Task<Bet> SaveBetToFile(Bet bet)
+        public static Bet SaveBetToFile(Bet bet)
         {
             CreateFile();
 
-            var jsonContent = await File.ReadAllTextAsync(betLogsFilePath);
+            var jsonContent = File.ReadAllText(betLogsFilePath);
             var bets = JsonConvert.DeserializeObject<List<Bet>>(jsonContent) ?? new List<Bet>();
 
             bets.Add(bet);
 
             var updatedJson = JsonConvert.SerializeObject(bets, Formatting.Indented);
 
-            await File.WriteAllTextAsync(betLogsFilePath, updatedJson);
+            File.WriteAllText(betLogsFilePath, updatedJson);
 
             return bet;
         }
 
-        public static async Task<List<Bet>> GetAllBetsFromFile()
+        public static List<Bet> GetAllBetsFromFile()
         {
-            return await GetAllObjectsFromFile<Bet>(betLogsFilePath);
+            return GetAllObjectsFromFile<Bet>(betLogsFilePath);
         }        
 
-        public static async Task<List<Event>> GetAllEventsFromFile()
+        public static List<Event> GetAllEventsFromFile()
         {
-            return await GetAllObjectsFromFile<Event>(eventsFilePath);
+            return GetAllObjectsFromFile<Event>(eventsFilePath);
         }
 
-        public static async Task<List<Player>> GetAllPlayersFromFile()
+        public static List<Player> GetAllPlayersFromFile()
         {
-            return await GetAllObjectsFromFile<Player>(playersFilePath);
+            return GetAllObjectsFromFile<Player>(playersFilePath);
         }
 
-        private static async Task<List<T>> GetAllObjectsFromFile<T>(string fileName)
+        private static List<T> GetAllObjectsFromFile<T>(string fileName)
         {
             if (!File.Exists(fileName))
             {
                 return new List<T>();
             }
 
-            var jsonContent = await File.ReadAllTextAsync(fileName);
+            var jsonContent =  File.ReadAllText(fileName);
 
             return JsonConvert.DeserializeObject<List<T>>(jsonContent) ?? new List<T>();
         }
 
-        private static async void CreateFile()
+        private static void CreateFile()
         {
             if (!File.Exists(betLogsFilePath))
             {
                 var emptyJsonArray = "[]";
-                await File.WriteAllTextAsync(betLogsFilePath, emptyJsonArray);
+                File.WriteAllText(betLogsFilePath, emptyJsonArray);
             }
         }
     }

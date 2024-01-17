@@ -17,7 +17,7 @@ namespace Better.Controllers
 
         // POST: /Bets
         [HttpPost]
-        public async Task<IActionResult> AddBet([FromBody] BetRequest betRequest)
+        public IActionResult AddBet([FromBody] BetRequest betRequest)
         {
             var bet = new Bet
             {
@@ -26,11 +26,11 @@ namespace Better.Controllers
                 Result = BetResult.Ongoing.ToString(),
             };
 
-            return Ok(await _betService.AddBet(bet, betRequest.Odd));
+            return Ok(_betService.AddBet(bet, betRequest.Odd));
         }
 
         // GET: /Bets/Logs
         [HttpGet("/Bets/Logs")]
-        public async Task<IActionResult> GetAllBetsLogs() => Ok(await _betService.GetAllBetsLogs());
+        public IActionResult GetAllBetsLogs() => Ok(_betService.GetAllBetsLogs());
     }
 }

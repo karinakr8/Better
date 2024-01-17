@@ -15,20 +15,13 @@ namespace Better.Services
             _betRepository = betRepository;
         }
 
-        public async Task<string> AddBet(Bet bet, float odd)
+        public string AddBet(Bet bet, float odd)
         {
-            try
-            {
-                Validator.ValidateBet(bet);
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
+            Validator.ValidateBet(bet);
 
-            return await _betRepository.AddBet(bet, odd);
+            return _betRepository.AddBet(bet, odd);
         }
 
-        public async Task<List<BetLog>> GetAllBetsLogs() => await _betRepository.GetAllBetsLogs();
+        public List<BetLog> GetAllBetsLogs() => _betRepository.GetAllBetsLogs();
     }
 }

@@ -8,19 +8,19 @@ namespace Better.Repositories.Utilities
         private static readonly float liveEventTolerance = 0.1F;
         private static readonly float regularEventTolerance = 0.05F;
 
-        public static async void ValidateBet(Bet bet, float odd)
+        public static void ValidateBet(Bet bet, float odd)
         {
-            await ValidateEventAsync(bet.EventId);
+            ValidateEvent(bet.EventId);
             ValidateOdd(odd, bet.EventId);
             ValidatePlayer(bet.PlayerId);
             ValidateResult(bet.Result);
         }
 
-        private static async Task ValidateEventAsync(int eventId)
+        private static void ValidateEvent(int eventId)
         {
-            var events = await Helper.GetAllEventsFromFile();
+            var events = Helper.GetAllEventsFromFile();
 
-            var eventDoesNotExist = events.Any(e => e.Id == eventId);
+            var eventDoesNotExist = !events.Any(e => e.Id == eventId);
 
             if (eventDoesNotExist)
             {
@@ -28,9 +28,9 @@ namespace Better.Repositories.Utilities
             }
         }
 
-        private static async void ValidateOdd(float playerOdd, int eventId)
+        private static void ValidateOdd(float playerOdd, int eventId)
         {
-            var events = await Helper.GetAllEventsFromFile();
+            var events = Helper.GetAllEventsFromFile();
 
             var betEvent = events.FirstOrDefault(e => e.Id == eventId);
 
@@ -63,9 +63,9 @@ namespace Better.Repositories.Utilities
             return false;
         }
 
-        private static async void ValidatePlayer(int playerId)
+        private static void ValidatePlayer(int playerId)
         {
-            var players = await Helper.GetAllPlayersFromFile();
+            var players = Helper.GetAllPlayersFromFile();
 
             var playerDoesNotExist = !players.Any(p => p.Id == playerId);
 
@@ -77,7 +77,7 @@ namespace Better.Repositories.Utilities
 
         private static void ValidateResult(string result)
         {
-            var valueIsIncorrect = Enum.TryParse<BetResult>(result, out var _);
+            var valueIsIncorrect = !Enum.TryParse<BetResult>(result, out var _);
 
             if (valueIsIncorrect)
             {
