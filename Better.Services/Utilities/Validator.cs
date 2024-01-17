@@ -1,18 +1,25 @@
-﻿using Better.Domain.Entities;
+﻿using Better.Domain.Models;
 
 namespace Better.Services.Utilities
 {
     public static class Validator
     {
-        public static void ValidateBet(Bet bet)
+        public static void ValidateBet(BetRequest betRequest)
         {
-            if (bet is null || bet.Id == 0 || bet.EventId == 0 || bet.PlayerId == 0 || bet.Result is null)
+            if (betRequest is null)
             {
-                throw new ArgumentException("Bet was defined incorrectly. Please specify all bet values.");
+                throw new ArgumentException("Bet parameters were defined incorrectly.");
             }
+
+            if (betRequest.EventId <= 0 || betRequest.PlayerId <= 0)
+            {
+                throw new ArgumentException("Ids can not be 0. Please specify existing values.");
+            }
+
+            ValidateOdd(betRequest.Odd);
         }
 
-        public static void ValidateOdd(float odd)
+        private static void ValidateOdd(float odd)
         {
             if (odd < 0)
             {

@@ -31,7 +31,7 @@ namespace Better.Middlewares
             {
                 return context.Response.WriteAsync(new Error
                 {
-                    StatusCode = (int)HttpStatusCode.BadRequest,
+                    StatusCode = context.Response.StatusCode = 400,
                     Message = exception.Message
                 }.ToString());
             }

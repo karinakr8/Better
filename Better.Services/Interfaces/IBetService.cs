@@ -5,7 +5,7 @@ namespace Better.Services.Interfaces
 {
     public interface IBetService
     {
-        string AddBet(Bet bet, float odd);
+        string AddBet(BetRequest betRequest);
         List<BetLog> GetAllBetsLogs();
     }
 }

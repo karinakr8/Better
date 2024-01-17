@@ -18,15 +18,8 @@ namespace Better.Controllers
         // POST: /Bets
         [HttpPost]
         public IActionResult AddBet([FromBody] BetRequest betRequest)
-        {
-            var bet = new Bet
-            {
-                EventId = betRequest.EventId,                
-                PlayerId = betRequest.PlayerId,
-                Result = BetResult.Ongoing.ToString(),
-            };
-
-            return Ok(_betService.AddBet(bet, betRequest.Odd));
+        {            
+            return Ok(_betService.AddBet(betRequest));
         }
 
         // GET: /Bets/Logs
