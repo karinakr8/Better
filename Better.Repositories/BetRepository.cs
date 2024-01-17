@@ -18,15 +18,14 @@ namespace Better.Repositories
 
         public string AddBet(BetRequest betRequest)
         {
-            _validator.ValidateBet(betRequest);            
+            _validator.ValidateBet(betRequest);
 
             var allEvents = _helper.GetAllEventsFromFile();
             var betEvent = allEvents.FirstOrDefault(e => e.Id == betRequest.EventId);
 
             var allPlayers = _helper.GetAllPlayersFromFile();
             var outdatedPlayer = allPlayers.FirstOrDefault(p => p.Id == betRequest.PlayerId);
-            var updatedPlayer = new Player { Id = outdatedPlayer.Id, Balance = outdatedPlayer.Balance - betRequest.Price };
-
+            var updatedPlayer = new Player { Id = outdatedPlayer.Id, Balance = (float)Math.Round(outdatedPlayer.Balance - betRequest.Price, 2) };
             _helper.UpdatePlayerFile(outdatedPlayer, updatedPlayer);
 
             var bet = new Bet
@@ -34,7 +33,7 @@ namespace Better.Repositories
                 Event = betEvent,
                 Player = updatedPlayer,
                 Result = BetResult.Ongoing.ToString(),
-                Price = betRequest.Price,
+                Price = (float)Math.Round(betRequest.Price, 2),
                 OddId = betEvent.Odds.OrderBy(o => Math.Abs(o.Value - betRequest.Odd)).First().Id
             };
 
