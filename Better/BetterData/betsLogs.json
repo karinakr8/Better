@@ -1,0 +1,29 @@
+[
+  {
+    "Id": 123,
+    "Event": {
+      "Id": 11,
+      "IsLive": true,
+      "StartTime": "2024-01-17T05:13:13.4369554+02:00",
+      "Odds": [
+        {
+          "Id": 22,
+          "Value": 0.2
+        },
+        {
+          "Id": 33,
+          "Value": 0.6
+        }
+      ]
+    },
+    "Odd": {
+      "Id": 22,
+      "Value": 0.2
+    },
+    "Player": {
+      "Id": 33,
+      "Balance": 12.0
+    },
+    "Result": "Lost"
+  }
+]
