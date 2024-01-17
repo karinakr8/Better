@@ -8,11 +8,13 @@ namespace Better.Domain.Entities
         [Required]
         public int Id { get; } = nextId++;
         [Required]
-        public int EventId { get; set; }
+        public Event? Event { get; set; }
         [Required]
         public int OddId { get; set; }
         [Required]
-        public int PlayerId { get; set; }
+        public Player? Player { get; set; }
+        [Required]
+        public float Price { get; set; }
         [Required]
         public string? Result { get; set; }
     }

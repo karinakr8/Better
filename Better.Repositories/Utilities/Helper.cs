@@ -8,18 +8,12 @@ namespace Better.Repositories.Utilities
         private static readonly string betLogsFilePath = "BetterData/betsLogs.json";
         private static readonly string eventsFilePath = "BetterData/Events.json";
         private static readonly string playersFilePath = "BetterData/Players.json";
-        public static Bet SaveBetToFile(Bet bet)
+
+        public static Bet SaveBetToFile<Bet>(Bet bet)
         {
-            CreateFile();
+            CreateFile(betLogsFilePath);
 
-            var jsonContent = File.ReadAllText(betLogsFilePath);
-            var bets = JsonConvert.DeserializeObject<List<Bet>>(jsonContent) ?? new List<Bet>();
-
-            bets.Add(bet);
-
-            var updatedJson = JsonConvert.SerializeObject(bets, Formatting.Indented);
-
-            File.WriteAllText(betLogsFilePath, updatedJson);
+            SaveObjectToFile(betLogsFilePath, bet);
 
             return bet;
         }
@@ -39,6 +33,29 @@ namespace Better.Repositories.Utilities
             return GetAllObjectsFromFile<Player>(playersFilePath);
         }
 
+        public static void UpdatePlayerFile(Player player, float betPrice)
+        {
+            if (!File.Exists(playersFilePath))
+            {
+                throw new ArgumentException($"No file by name {playersFilePath} was found");
+            }
+            
+            var players = GetAllObjectsFromFile<Player>(playersFilePath);
+            
+            var playerToUpdate = players.FirstOrDefault(p => p.Id == player.Id);
+
+            if (playerToUpdate == null)
+            {
+                throw new ArgumentException($"No player by id {player.Id} was found");
+            }
+
+            playerToUpdate.Balance -= betPrice;
+
+            var updatedJson = JsonConvert.SerializeObject(players, Formatting.Indented);
+
+            File.WriteAllText(playersFilePath, updatedJson);
+        }
+
         private static List<T> GetAllObjectsFromFile<T>(string fileName)
         {
             if (!File.Exists(fileName))
@@ -51,13 +68,27 @@ namespace Better.Repositories.Utilities
             return JsonConvert.DeserializeObject<List<T>>(jsonContent) ?? new List<T>();
         }
 
-        private static void CreateFile()
+        private static void CreateFile(string fileName)
         {
-            if (!File.Exists(betLogsFilePath))
+            if (!File.Exists(fileName))
             {
                 var emptyJsonArray = "[]";
-                File.WriteAllText(betLogsFilePath, emptyJsonArray);
+                File.WriteAllText(fileName, emptyJsonArray);
             }
+        }
+
+        private static void SaveObjectToFile<T>(string fileName, T obj)
+        {
+            CreateFile(fileName);
+
+            var jsonContent = File.ReadAllText(fileName);
+            var objects = JsonConvert.DeserializeObject<List<T>>(jsonContent) ?? new List<T>();
+
+            objects.Add(obj);
+
+            var updatedJson = JsonConvert.SerializeObject(objects, Formatting.Indented);
+
+            File.WriteAllText(fileName, updatedJson);
         }
     }
 }

@@ -20,14 +20,7 @@ namespace Better.Services
         {
             Validator.ValidateBet(betRequest);
 
-            var bet = new Bet
-            {
-                EventId = betRequest.EventId,
-                PlayerId = betRequest.PlayerId,
-                Result = BetResult.Ongoing.ToString(),
-            };
-
-            return _betRepository.AddBet(bet, betRequest.Odd);
+            return _betRepository.AddBet(betRequest);
         }
 
         public List<BetLog> GetAllBetsLogs() => _betRepository.GetAllBetsLogs();

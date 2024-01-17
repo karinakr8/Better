@@ -2,7 +2,7 @@
 
 namespace Better.Domain.Entities
 {
-    public class Odd
+    public class Odd : Entity
     {
         [Key]
         [Required]

@@ -2,12 +2,10 @@
 
 namespace Better.Domain.Entities
 {
-    public class Player : Entity
+    public class Entity
     {
         [Key]
         [Required]
         public int Id { get; set; }
-        [Required]
-        public float Balance { get; set; }
     }
 }

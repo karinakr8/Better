@@ -1,5 +1,6 @@
 ﻿using Better.Domain.Entities;
 using Better.Domain.Enums;
+using Better.Domain.Models;
 
 namespace Better.Repositories.Utilities
 {
@@ -8,13 +9,23 @@ namespace Better.Repositories.Utilities
         private static readonly float liveEventTolerance = 0.1F;
         private static readonly float regularEventTolerance = 0.05F;
 
-        public static void ValidateBet(Bet bet, float odd)
+        public static void ValidateBet(BetRequest betRequest)
         {
-            ValidateEvent(bet.EventId);
-            ValidateOdd(odd, bet.EventId);
-            ValidatePlayer(bet.PlayerId);
-            ValidateResult(bet.Result);
+            ValidateEvent(betRequest.EventId);
+            ValidateOdd(betRequest.Odd, betRequest.EventId);
+            ValidatePlayer(betRequest.PlayerId);
+            ValidatePlayerBudget(betRequest.PlayerId, betRequest.Price);
         }
+        
+        public static void ValidateResult(string result)
+        {
+            var valueIsIncorrect = !Enum.TryParse<BetResult>(result, out var _);
+
+            if (valueIsIncorrect)
+            {
+                throw new ArgumentException("Result must be one of the defined values.");
+            }
+        }   
 
         private static void ValidateEvent(int eventId)
         {
@@ -75,14 +86,16 @@ namespace Better.Repositories.Utilities
             }
         }
 
-        private static void ValidateResult(string result)
+        private static void ValidatePlayerBudget(int playerId, float betPrice)
         {
-            var valueIsIncorrect = !Enum.TryParse<BetResult>(result, out var _);
+            var players = Helper.GetAllPlayersFromFile();
 
-            if (valueIsIncorrect)
+            var player = players.FirstOrDefault(p => p.Id == playerId);
+
+            if (player.Balance < betPrice)
             {
-                throw new ArgumentException("Result must be one of the defined values.");
+                throw new ArgumentException("Player balance is too low.");
             }
-        }        
+        }
     }
 }

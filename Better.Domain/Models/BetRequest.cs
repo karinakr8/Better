@@ -10,5 +10,7 @@ namespace Better.Domain.Models
         public float Odd { get; set; }
         [Required]
         public int PlayerId { get; set; }
+        [Required]
+        public float Price { get; set; }
     }
 }

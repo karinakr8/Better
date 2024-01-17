@@ -1,4 +1,5 @@
 ﻿using Better.Domain.Entities;
+using Better.Domain.Enums;
 using Better.Domain.Models;
 using Better.Repositories.Interfaces;
 using Better.Repositories.Utilities;
@@ -7,15 +8,30 @@ namespace Better.Repositories
 {
     public class BetRepository : IBetRepository
     {
-        public string AddBet(Bet bet, float odd)
+        public string AddBet(BetRequest betRequest)
         {
-            Validator.ValidateBet(bet, odd);
+            Validator.ValidateBet(betRequest);            
 
             var allEvents = Helper.GetAllEventsFromFile();
-            var betEvent = allEvents.FirstOrDefault(e => e.Id == bet.EventId);
+            var betEvent = allEvents.FirstOrDefault(e => e.Id == betRequest.EventId);
 
-            var betOdd = betEvent?.Odds?.OrderBy(o => Math.Abs(o.Value - odd)).First();
+            var allPlayers = Helper.GetAllPlayersFromFile();
+            var betPlayer = allPlayers.FirstOrDefault(p => p.Id == betRequest.PlayerId);
+
+            var bet = new Bet
+            {
+                Event = betEvent,
+                Player = betPlayer,
+                Result = BetResult.Ongoing.ToString(),
+                Price = betRequest.Price
+            };
+
+            var betOdd = betEvent?.Odds?.OrderBy(o => Math.Abs(o.Value - betRequest.Odd)).First();
             bet.OddId = betOdd.Id;
+
+            Validator.ValidateResult(bet.Result);
+
+            Helper.UpdatePlayerFile(betPlayer, betRequest.Price);
 
             Helper.SaveBetToFile(bet);
 
@@ -32,7 +48,7 @@ namespace Better.Repositories
                 betLogs.Add(new BetLog()
                 {
                     BetId = bet.Id,
-                    EventId = bet.EventId,
+                    EventId = bet.Event.Id,
                     OddId = bet.OddId,
                     ResultCode = bet.Result,
                 });
