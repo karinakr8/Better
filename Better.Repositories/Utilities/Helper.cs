@@ -1,28 +1,29 @@
 ﻿using Better.Domain.Entities;
+using Better.Repositories.Interfaces;
 using Newtonsoft.Json;
 
 namespace Better.Repositories.Utilities
 {
-    public static class Helper
+    public class Helper : IHelper
     {
-        private static readonly string betLogsFilePath = "BetterData/betsLogs.json";
-        private static readonly string eventsFilePath = "BetterData/Events.json";
-        private static readonly string playersFilePath = "BetterData/Players.json";
+        private readonly string betLogsFilePath = "BetterData/betsLogs.json";
+        private readonly string eventsFilePath = "BetterData/Events.json";
+        private readonly string playersFilePath = "BetterData/Players.json";
 
-        public static List<Bet> GetAllBetsFromFile() => GetAllObjectsFromFile<Bet>(betLogsFilePath);       
+        public List<Bet> GetAllBetsFromFile() => GetAllObjectsFromFile<Bet>(betLogsFilePath);
 
-        public static List<Event> GetAllEventsFromFile() => GetAllObjectsFromFile<Event>(eventsFilePath);
+        public List<Event> GetAllEventsFromFile() => GetAllObjectsFromFile<Event>(eventsFilePath);
 
-        public static List<Player> GetAllPlayersFromFile() => GetAllObjectsFromFile<Player>(playersFilePath);
+        public List<Player> GetAllPlayersFromFile() => GetAllObjectsFromFile<Player>(playersFilePath);
 
-        public static void SaveBetToFile(Bet bet)
+        public void SaveBetToFile(Bet bet)
         {
             CreateFileIfDontExist(betLogsFilePath);
 
             SaveObjectToFile(betLogsFilePath, bet);
         }
 
-        public static void UpdatePlayerFile(Player outdatedPlayer, Player updatedPlayer)
+        public void UpdatePlayerFile(Player outdatedPlayer, Player updatedPlayer)
         {
             if (!File.Exists(playersFilePath))
             {
@@ -32,19 +33,19 @@ namespace Better.Repositories.Utilities
             UpdateObjecFile(playersFilePath, outdatedPlayer, updatedPlayer);
         }
 
-        private static List<T> GetAllObjectsFromFile<T>(string fileName)
+        private List<T> GetAllObjectsFromFile<T>(string fileName)
         {
             if (!File.Exists(fileName))
             {
                 return new List<T>();
             }
 
-            var jsonContent =  File.ReadAllText(fileName);
+            var jsonContent = File.ReadAllText(fileName);
 
             return JsonConvert.DeserializeObject<List<T>>(jsonContent) ?? new List<T>();
         }
 
-        private static void CreateFileIfDontExist(string fileName)
+        private void CreateFileIfDontExist(string fileName)
         {
             if (!File.Exists(fileName))
             {
@@ -53,7 +54,7 @@ namespace Better.Repositories.Utilities
             }
         }
 
-        private static void SaveObjectToFile<T>(string fileName, T obj)
+        private void SaveObjectToFile<T>(string fileName, T obj)
         {
             CreateFileIfDontExist(fileName);
 
@@ -67,7 +68,7 @@ namespace Better.Repositories.Utilities
             File.WriteAllText(fileName, updatedJson);
         }
 
-        private static void UpdateObjecFile<T>(string fileName, T outdatedObj, T updatedObj)
+        private void UpdateObjecFile<T>(string fileName, T outdatedObj, T updatedObj)
         {
             CreateFileIfDontExist(fileName);
 

@@ -1,14 +1,16 @@
 ﻿using Better.Domain.Entities;
 using Better.Domain.Models;
+using Better.Repositories.Interfaces;
 
 namespace Better.Repositories.Utilities
 {
-    public class Validator
+    public class Validator : IValidator
     {
-        private static readonly float liveEventTolerance = 0.1F;
-        private static readonly float regularEventTolerance = 0.05F;
+        private readonly float liveEventTolerance = 0.1F;
+        private readonly float regularEventTolerance = 0.05F;
+        private readonly Helper _helper = new();
 
-        public static void ValidateBet(BetRequest betRequest)
+        public void ValidateBet(BetRequest betRequest)
         {
             ValidateEvent(betRequest.EventId);
             ValidateOdd(betRequest.Odd, betRequest.EventId);
@@ -16,9 +18,9 @@ namespace Better.Repositories.Utilities
             ValidatePlayerBudget(betRequest.PlayerId, betRequest.Price);
         }
 
-        private static void ValidateEvent(int eventId)
+        private void ValidateEvent(int eventId)
         {
-            var events = Helper.GetAllEventsFromFile();
+            var events = _helper.GetAllEventsFromFile();
 
             if (!events.Any(e => e.Id == eventId))
             {
@@ -26,9 +28,9 @@ namespace Better.Repositories.Utilities
             }
         }
 
-        private static void ValidateOdd(float playerOdd, int eventId)
+        private void ValidateOdd(float playerOdd, int eventId)
         {
-            var events = Helper.GetAllEventsFromFile();
+            var events = _helper.GetAllEventsFromFile();
 
             var betEvent = events.FirstOrDefault(e => e.Id == eventId);
 
@@ -45,7 +47,7 @@ namespace Better.Repositories.Utilities
             }
         }
 
-        private static bool OddAccepted(float playerOdd, List<Odd> eventOdds, float tolerance)
+        private bool OddAccepted(float playerOdd, List<Odd> eventOdds, float tolerance)
         {
             foreach (var odd in eventOdds)
             {
@@ -61,9 +63,9 @@ namespace Better.Repositories.Utilities
             return false;
         }
 
-        private static void ValidatePlayer(int playerId)
+        private void ValidatePlayer(int playerId)
         {
-            var players = Helper.GetAllPlayersFromFile();
+            var players = _helper.GetAllPlayersFromFile();
 
             if (!players.Any(p => p.Id == playerId))
             {
@@ -71,9 +73,9 @@ namespace Better.Repositories.Utilities
             }
         }
 
-        private static void ValidatePlayerBudget(int playerId, float betPrice)
+        private void ValidatePlayerBudget(int playerId, float betPrice)
         {
-            var players = Helper.GetAllPlayersFromFile();
+            var players = _helper.GetAllPlayersFromFile();
 
             var playerBalance = players.FirstOrDefault(p => p.Id == playerId).Balance;
 

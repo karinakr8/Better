@@ -1,47 +1,48 @@
 ﻿using Better.Domain.Models;
+using Better.Services.Interfaces;
 
 namespace Better.Services.Utilities
 {
-    public static class Validator
+    public class Validator : IValidator
     {
-        public static void ValidateBet(BetRequest betRequest)
+        public void ValidateBet(BetRequest betRequest)
         {
             if (betRequest is null)
             {
                 throw new ArgumentException("Bet parameters were defined incorrectly.");
             }
-            
+
             ValidateEventId(betRequest.EventId);
             ValidatePlayerId(betRequest.PlayerId);
             ValidateOdd(betRequest.Odd);
             ValidatePrice(betRequest.Price);
         }
 
-        private static void ValidateOdd(float odd)
+        private void ValidateOdd(float odd)
         {
-            if (odd < 0)
+            if (odd <= 0)
             {
-                throw new ArgumentException("Odds can not have negative value.");
+                throw new ArgumentException("Odds can not have negative or zero value.");
             }
         }
 
-        private static void ValidateEventId(float eventId)
+        private void ValidateEventId(float eventId)
         {
             if (eventId <= 0)
             {
-                throw new ArgumentException("Ids can not be 0. Please specify existing values.");
+                throw new ArgumentException("Ids can not be negative or zero values. Please specify existing values.");
             }
         }
 
-        private static void ValidatePlayerId(float playerId)
+        private void ValidatePlayerId(float playerId)
         {
             if (playerId <= 0)
             {
-                throw new ArgumentException("Ids can not be 0. Please specify existing values.");
+                throw new ArgumentException("Ids can not be negative or zero values. Please specify existing values.");
             }
         }
 
-        private static void ValidatePrice(float betPrice)
+        private void ValidatePrice(float betPrice)
         {
             if (betPrice <= 0)
             {
