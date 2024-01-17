@@ -5,7 +5,7 @@ namespace Better.Services.Interfaces
 {
     public interface IBetService
     {
-        Task<Bet> AddBet(Bet bet);
+        Task<string> AddBet(Bet bet, float odd);
         Task<List<BetLog>> GetAllBetsLogs();
     }
 }

@@ -1,19 +1,18 @@
-﻿using Better.Domain.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Better.Domain.Entities
 {
     public class Bet
     {
-        [Key]
+        private static int nextId = 1;
         [Required]
-        public int Id { get; set; }
+        public int Id { get; } = nextId++;
         [Required]
-        public Event? Event { get; set; }
+        public int EventId { get; set; }
         [Required]
-        public Odd? Odd { get; set; }
+        public int OddId { get; set; }
         [Required]
-        public Player? Player { get; set; }
+        public int PlayerId { get; set; }
         [Required]
         public string? Result { get; set; }
     }

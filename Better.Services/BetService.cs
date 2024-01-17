@@ -1,6 +1,7 @@
 ﻿using Better.Domain.Entities;
 using Better.Domain.Models;
 using Better.Repositories.Interfaces;
+using Better.Services.Utilities;
 using Better.Services.Interfaces;
 
 namespace Better.Services
@@ -14,7 +15,19 @@ namespace Better.Services
             _betRepository = betRepository;
         }
 
-        public async Task<Bet> AddBet(Bet bet) => await _betRepository.AddBet(bet);
+        public async Task<string> AddBet(Bet bet, float odd)
+        {
+            try
+            {
+                Validator.ValidateBet(bet);
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+
+            return await _betRepository.AddBet(bet, odd);
+        }
 
         public async Task<List<BetLog>> GetAllBetsLogs() => await _betRepository.GetAllBetsLogs();
     }

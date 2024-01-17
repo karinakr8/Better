@@ -6,8 +6,29 @@ using Better.Repositories.Utilities;
 namespace Better.Repositories
 {
     public class BetRepository : IBetRepository
-    {        
-        public async Task<Bet> AddBet(Bet bet) => await Helper.SaveBetToFile(bet);
+    {
+        public async Task<string> AddBet(Bet bet, float odd)
+        {
+            try
+            {
+                Validator.ValidateBet(bet, odd);
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+
+            var allEvents = await Helper.GetAllEventsFromFile();
+            var betEvent = allEvents.FirstOrDefault(e => e.Id == bet.EventId);
+
+            var betOdd = betEvent?.Odds?.OrderBy(o => Math.Abs(o.Value - odd)).First();
+            bet.OddId = betOdd.Id;
+
+            await Helper.SaveBetToFile(bet);
+
+            return "Bet was successfully placed.";
+        }
+
         public async Task<List<BetLog>> GetAllBetsLogs()
         {
             var bets = await Helper.GetAllBetsFromFile();
@@ -18,8 +39,8 @@ namespace Better.Repositories
                 betLogs.Add(new BetLog()
                 {
                     BetId = bet.Id,
-                    EventId = bet.Event.Id,
-                    OddId = bet.Odd.Id,
+                    EventId = bet.EventId,
+                    OddId = bet.OddId,
                     ResultCode = bet.Result,
                 });
             }
