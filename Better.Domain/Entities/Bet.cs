@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Better.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Better.Domain.Entities
 {
@@ -13,5 +14,7 @@ namespace Better.Domain.Entities
         public Odd? Odd { get; set; }
         [Required]
         public Player? Player { get; set; }
+        [Required]
+        public string? Result { get; set; }
     }
 }

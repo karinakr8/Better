@@ -10,4 +10,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Better.Controllers\Better.Controllers.csproj" />
+    <ProjectReference Include="..\Better.Repositories\Better.Repositories.csproj" />
+    <ProjectReference Include="..\Better.Services\Better.Services.csproj" />
+  </ItemGroup>
+
 </Project>
