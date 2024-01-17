@@ -27,7 +27,6 @@ namespace Better.Services
                 Result = BetResult.Ongoing.ToString(),
             };
 
-
             return _betRepository.AddBet(bet, betRequest.Odd);
         }
 

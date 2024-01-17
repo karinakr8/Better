@@ -3,6 +3,7 @@ using Better.Repositories;
 using Better.Repositories.Interfaces;
 using Better.Services;
 using Better.Services.Interfaces;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration).CreateLogger();
 
 app.ConfigureCustomExceptionMiddleware();
 

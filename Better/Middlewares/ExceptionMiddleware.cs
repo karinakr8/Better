@@ -1,4 +1,5 @@
 ﻿using Better.Domain.Models;
+using Serilog;
 using System.Net;
 
 namespace Better.Middlewares
@@ -26,6 +27,8 @@ namespace Better.Middlewares
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+            Log.Error($"Something Went Wrong. {context.Response}. {exception.Message}");
 
             if (exception.GetType().IsAssignableFrom(typeof(ArgumentException)))
             {
