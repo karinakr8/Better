@@ -7,9 +7,9 @@ namespace Better.Services
     public class BetService : IBetService
     {
         private readonly IBetRepository _betRepository;
-        private readonly Interfaces.IValidator _validator;
+        private readonly IServicesValidator _validator;
 
-        public BetService(IBetRepository betRepository, Interfaces.IValidator validator)
+        public BetService(IBetRepository betRepository, IServicesValidator validator)
         {
             _betRepository = betRepository;
             _validator = validator;

@@ -1,14 +1,19 @@
 using Better.Middlewares;
 using Better.Repositories;
 using Better.Repositories.Interfaces;
+using Better.Repositories.Utilities;
 using Better.Services;
 using Better.Services.Interfaces;
+using Better.Services.Utilities;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddScoped<IHelper, Helper>();
+builder.Services.AddScoped<IRepositoriesValidator, RepositoriesValidator>();
+builder.Services.AddScoped<IServicesValidator, ServicesValidator>();
 builder.Services.AddScoped<IBetRepository, BetRepository>();
 builder.Services.AddScoped<IBetService, BetService>();
 

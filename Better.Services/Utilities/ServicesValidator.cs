@@ -3,7 +3,7 @@ using Better.Services.Interfaces;
 
 namespace Better.Services.Utilities
 {
-    public class Validator : IValidator
+    public class ServicesValidator : IServicesValidator
     {
         public void ValidateBet(BetRequest betRequest)
         {

@@ -2,7 +2,7 @@
 
 namespace Better.Repositories.Interfaces
 {
-    public interface IValidator
+    public interface IRepositoriesValidator
     {
         void ValidateBet(BetRequest betRequest);
     }

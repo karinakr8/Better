@@ -1,102 +1,127 @@
 [
   {
-    "Id": 2,
     "Event": {
-      "Id": 123,
       "IsLive": true,
       "StartTime": "2024-01-16T12:00:00",
       "Odds": [
         {
-          "Id": 1,
-          "Value": 1.5
+          "Value": 1.5,
+          "Id": 1
         },
         {
-          "Id": 2,
-          "Value": 2.0
+          "Value": 2.0,
+          "Id": 2
         }
-      ]
+      ],
+      "Id": 123
     },
     "OddId": 1,
     "Player": {
-      "Id": 78901,
-      "Balance": 75.2
+      "Balance": 75.2,
+      "Id": 78901
     },
     "Price": 0.0,
-    "Result": "Ongoing"
+    "Result": "Ongoing",
+    "Id": 2
   },
   {
-    "Id": 3,
     "Event": {
-      "Id": 123,
       "IsLive": true,
       "StartTime": "2024-01-16T12:00:00",
       "Odds": [
         {
-          "Id": 1,
-          "Value": 1.5
+          "Value": 1.5,
+          "Id": 1
         },
         {
-          "Id": 2,
-          "Value": 2.0
+          "Value": 2.0,
+          "Id": 2
         }
-      ]
+      ],
+      "Id": 123
     },
     "OddId": 1,
     "Player": {
-      "Id": 78901,
-      "Balance": 75.2
+      "Balance": 75.2,
+      "Id": 78901
     },
     "Price": 0.0,
-    "Result": "Ongoing"
+    "Result": "Ongoing",
+    "Id": 3
   },
   {
-    "Id": 4,
     "Event": {
-      "Id": 123,
       "IsLive": true,
       "StartTime": "2024-01-16T12:00:00",
       "Odds": [
         {
-          "Id": 1,
-          "Value": 1.5
+          "Value": 1.5,
+          "Id": 1
         },
         {
-          "Id": 2,
-          "Value": 2.0
+          "Value": 2.0,
+          "Id": 2
         }
-      ]
+      ],
+      "Id": 123
     },
     "OddId": 1,
     "Player": {
-      "Id": 78901,
-      "Balance": 75.2
+      "Balance": 75.2,
+      "Id": 78901
     },
     "Price": 0.0,
-    "Result": "Ongoing"
+    "Result": "Ongoing",
+    "Id": 4
   },
   {
-    "Id": 1,
     "Event": {
-      "Id": 123,
       "IsLive": true,
       "StartTime": "2024-01-16T12:00:00",
       "Odds": [
         {
-          "Id": 1,
-          "Value": 1.5
+          "Value": 1.5,
+          "Id": 1
         },
         {
-          "Id": 2,
-          "Value": 2.0
+          "Value": 2.0,
+          "Id": 2
         }
-      ]
+      ],
+      "Id": 123
     },
     "OddId": 1,
     "Player": {
-      "Id": 78901,
-      "Balance": 75.2
+      "Balance": 75.2,
+      "Id": 78901
     },
     "Price": 1.0,
-    "Result": "Ongoing"
+    "Result": "Ongoing",
+    "Id": 1
+  },
+  {
+    "Event": {
+      "IsLive": true,
+      "StartTime": "2024-01-16T12:00:00",
+      "Odds": [
+        {
+          "Value": 1.5,
+          "Id": 1
+        },
+        {
+          "Value": 2.0,
+          "Id": 2
+        }
+      ],
+      "Id": 123
+    },
+    "OddId": 1,
+    "Player": {
+      "Balance": 73.2,
+      "Id": 78901
+    },
+    "Price": 1.0,
+    "Result": "Ongoing",
+    "Id": 41
   }
 ]

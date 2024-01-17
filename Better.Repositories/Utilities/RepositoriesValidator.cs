@@ -4,18 +4,23 @@ using Better.Repositories.Interfaces;
 
 namespace Better.Repositories.Utilities
 {
-    public class Validator : IValidator
+    public class RepositoriesValidator : IRepositoriesValidator
     {
         private readonly float liveEventTolerance = 0.1F;
         private readonly float regularEventTolerance = 0.05F;
-        private readonly Helper _helper = new();
+        private readonly IHelper _helper;
+
+        public RepositoriesValidator(IHelper helper)
+        {
+            _helper = helper;
+        }
 
         public void ValidateBet(BetRequest betRequest)
         {
             ValidateEvent(betRequest.EventId);
             ValidateOdd(betRequest.Odd, betRequest.EventId);
             ValidatePlayer(betRequest.PlayerId);
-            ValidatePlayerBudget(betRequest.PlayerId, betRequest.Price);
+            ValidatePlayerBalance(betRequest.PlayerId, betRequest.Price);
         }
 
         private void ValidateEvent(int eventId)
@@ -73,7 +78,7 @@ namespace Better.Repositories.Utilities
             }
         }
 
-        private void ValidatePlayerBudget(int playerId, float betPrice)
+        private void ValidatePlayerBalance(int playerId, float betPrice)
         {
             var players = _helper.GetAllPlayersFromFile();
 

@@ -8,9 +8,9 @@ namespace Better.Repositories
     public class BetRepository : IBetRepository
     {
         private readonly IHelper _helper;
-        private readonly IValidator _validator;
+        private readonly IRepositoriesValidator _validator;
 
-        public BetRepository(IHelper helper, IValidator validator)
+        public BetRepository(IHelper helper, IRepositoriesValidator validator)
         {
             _helper = helper;
             _validator = validator;

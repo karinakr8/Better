@@ -2,7 +2,7 @@
 
 namespace Better.Services.Interfaces
 {
-    public interface IValidator
+    public interface IServicesValidator
     {
         void ValidateBet(BetRequest betRequest);
     }
