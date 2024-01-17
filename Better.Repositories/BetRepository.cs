@@ -16,22 +16,19 @@ namespace Better.Repositories
             var betEvent = allEvents.FirstOrDefault(e => e.Id == betRequest.EventId);
 
             var allPlayers = Helper.GetAllPlayersFromFile();
-            var betPlayer = allPlayers.FirstOrDefault(p => p.Id == betRequest.PlayerId);
+            var outdatedPlayer = allPlayers.FirstOrDefault(p => p.Id == betRequest.PlayerId);
+            var updatedPlayer = new Player { Id = outdatedPlayer.Id, Balance = outdatedPlayer.Balance - betRequest.Price };
+                
+            Helper.UpdatePlayerFile(outdatedPlayer, updatedPlayer);
 
             var bet = new Bet
             {
                 Event = betEvent,
-                Player = betPlayer,
+                Player = updatedPlayer,
                 Result = BetResult.Ongoing.ToString(),
-                Price = betRequest.Price
+                Price = betRequest.Price,
+                OddId = betEvent.Odds.OrderBy(o => Math.Abs(o.Value - betRequest.Odd)).First().Id
             };
-
-            var betOdd = betEvent?.Odds?.OrderBy(o => Math.Abs(o.Value - betRequest.Odd)).First();
-            bet.OddId = betOdd.Id;
-
-            Validator.ValidateResult(bet.Result);
-
-            Helper.UpdatePlayerFile(betPlayer, betRequest.Price);
 
             Helper.SaveBetToFile(bet);
 

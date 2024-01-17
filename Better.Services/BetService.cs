@@ -1,9 +1,7 @@
-﻿using Better.Domain.Entities;
-using Better.Domain.Models;
+﻿using Better.Domain.Models;
 using Better.Repositories.Interfaces;
 using Better.Services.Utilities;
 using Better.Services.Interfaces;
-using Better.Domain.Enums;
 
 namespace Better.Services
 {

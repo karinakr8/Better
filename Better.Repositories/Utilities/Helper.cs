@@ -9,51 +9,27 @@ namespace Better.Repositories.Utilities
         private static readonly string eventsFilePath = "BetterData/Events.json";
         private static readonly string playersFilePath = "BetterData/Players.json";
 
-        public static Bet SaveBetToFile<Bet>(Bet bet)
+        public static List<Bet> GetAllBetsFromFile() => GetAllObjectsFromFile<Bet>(betLogsFilePath);       
+
+        public static List<Event> GetAllEventsFromFile() => GetAllObjectsFromFile<Event>(eventsFilePath);
+
+        public static List<Player> GetAllPlayersFromFile() => GetAllObjectsFromFile<Player>(playersFilePath);
+
+        public static void SaveBetToFile(Bet bet)
         {
-            CreateFile(betLogsFilePath);
+            CreateFileIfDontExist(betLogsFilePath);
 
             SaveObjectToFile(betLogsFilePath, bet);
-
-            return bet;
         }
 
-        public static List<Bet> GetAllBetsFromFile()
-        {
-            return GetAllObjectsFromFile<Bet>(betLogsFilePath);
-        }        
-
-        public static List<Event> GetAllEventsFromFile()
-        {
-            return GetAllObjectsFromFile<Event>(eventsFilePath);
-        }
-
-        public static List<Player> GetAllPlayersFromFile()
-        {
-            return GetAllObjectsFromFile<Player>(playersFilePath);
-        }
-
-        public static void UpdatePlayerFile(Player player, float betPrice)
+        public static void UpdatePlayerFile(Player outdatedPlayer, Player updatedPlayer)
         {
             if (!File.Exists(playersFilePath))
             {
                 throw new ArgumentException($"No file by name {playersFilePath} was found");
             }
-            
-            var players = GetAllObjectsFromFile<Player>(playersFilePath);
-            
-            var playerToUpdate = players.FirstOrDefault(p => p.Id == player.Id);
 
-            if (playerToUpdate == null)
-            {
-                throw new ArgumentException($"No player by id {player.Id} was found");
-            }
-
-            playerToUpdate.Balance -= betPrice;
-
-            var updatedJson = JsonConvert.SerializeObject(players, Formatting.Indented);
-
-            File.WriteAllText(playersFilePath, updatedJson);
+            UpdateObjecFile(playersFilePath, outdatedPlayer, updatedPlayer);
         }
 
         private static List<T> GetAllObjectsFromFile<T>(string fileName)
@@ -68,7 +44,7 @@ namespace Better.Repositories.Utilities
             return JsonConvert.DeserializeObject<List<T>>(jsonContent) ?? new List<T>();
         }
 
-        private static void CreateFile(string fileName)
+        private static void CreateFileIfDontExist(string fileName)
         {
             if (!File.Exists(fileName))
             {
@@ -79,12 +55,27 @@ namespace Better.Repositories.Utilities
 
         private static void SaveObjectToFile<T>(string fileName, T obj)
         {
-            CreateFile(fileName);
+            CreateFileIfDontExist(fileName);
 
             var jsonContent = File.ReadAllText(fileName);
             var objects = JsonConvert.DeserializeObject<List<T>>(jsonContent) ?? new List<T>();
 
             objects.Add(obj);
+
+            var updatedJson = JsonConvert.SerializeObject(objects, Formatting.Indented);
+
+            File.WriteAllText(fileName, updatedJson);
+        }
+
+        private static void UpdateObjecFile<T>(string fileName, T outdatedObj, T updatedObj)
+        {
+            CreateFileIfDontExist(fileName);
+
+            var jsonContent = File.ReadAllText(fileName);
+            var objects = JsonConvert.DeserializeObject<List<T>>(jsonContent) ?? new List<T>();
+
+            objects.Remove(outdatedObj);
+            objects.Add(updatedObj);
 
             var updatedJson = JsonConvert.SerializeObject(objects, Formatting.Indented);
 

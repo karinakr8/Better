@@ -1,5 +1,4 @@
 ﻿using Better.Domain.Entities;
-using Better.Domain.Enums;
 using Better.Domain.Models;
 
 namespace Better.Repositories.Utilities
@@ -16,24 +15,12 @@ namespace Better.Repositories.Utilities
             ValidatePlayer(betRequest.PlayerId);
             ValidatePlayerBudget(betRequest.PlayerId, betRequest.Price);
         }
-        
-        public static void ValidateResult(string result)
-        {
-            var valueIsIncorrect = !Enum.TryParse<BetResult>(result, out var _);
-
-            if (valueIsIncorrect)
-            {
-                throw new ArgumentException("Result must be one of the defined values.");
-            }
-        }   
 
         private static void ValidateEvent(int eventId)
         {
             var events = Helper.GetAllEventsFromFile();
 
-            var eventDoesNotExist = !events.Any(e => e.Id == eventId);
-
-            if (eventDoesNotExist)
+            if (!events.Any(e => e.Id == eventId))
             {
                 throw new ArgumentException("Event does not exist.");
             }
@@ -65,7 +52,7 @@ namespace Better.Repositories.Utilities
                 double lowerBound = odd.Value - (odd.Value * tolerance);
                 double upperBound = odd.Value + (odd.Value * tolerance);
 
-                if(playerOdd >= lowerBound && playerOdd <= upperBound)
+                if (playerOdd >= lowerBound && playerOdd <= upperBound)
                 {
                     return true;
                 }
@@ -78,9 +65,7 @@ namespace Better.Repositories.Utilities
         {
             var players = Helper.GetAllPlayersFromFile();
 
-            var playerDoesNotExist = !players.Any(p => p.Id == playerId);
-
-            if (playerDoesNotExist)
+            if (!players.Any(p => p.Id == playerId))
             {
                 throw new ArgumentException("Player does not exist.");
             }
@@ -90,9 +75,9 @@ namespace Better.Repositories.Utilities
         {
             var players = Helper.GetAllPlayersFromFile();
 
-            var player = players.FirstOrDefault(p => p.Id == playerId);
+            var playerBalance = players.FirstOrDefault(p => p.Id == playerId).Balance;
 
-            if (player.Balance < betPrice)
+            if (playerBalance < betPrice)
             {
                 throw new ArgumentException("Player balance is too low.");
             }

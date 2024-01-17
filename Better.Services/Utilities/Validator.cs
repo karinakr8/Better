@@ -1,5 +1,4 @@
 ﻿using Better.Domain.Models;
-using System.Net;
 
 namespace Better.Services.Utilities
 {

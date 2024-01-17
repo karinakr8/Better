@@ -2,11 +2,8 @@
 
 namespace Better.Domain.Entities
 {
-    public class Event
+    public class Event : Entity
     {
-        [Key]
-        [Required]
-        public int Id { get; set; }
         [Required]
         public bool IsLive { get; set; }
         [Required]

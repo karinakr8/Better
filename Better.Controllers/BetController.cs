@@ -1,6 +1,4 @@
-﻿using Better.Domain.Entities;
-using Better.Domain.Enums;
-using Better.Domain.Models;
+﻿using Better.Domain.Models;
 using Better.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,10 +15,7 @@ namespace Better.Controllers
 
         // POST: /Bets
         [HttpPost]
-        public IActionResult AddBet([FromBody] BetRequest betRequest)
-        {            
-            return Ok(_betService.AddBet(betRequest));
-        }
+        public IActionResult AddBet([FromBody] BetRequest betRequest) => Ok(_betService.AddBet(betRequest));
 
         // GET: /Bets/Logs
         [HttpGet("/Bets/Logs")]

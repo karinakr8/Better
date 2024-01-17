@@ -1,5 +1,4 @@
-﻿using Better.Domain.Entities;
-using Better.Domain.Models;
+﻿using Better.Domain.Models;
 
 namespace Better.Services.Interfaces
 {

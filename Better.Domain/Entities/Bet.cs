@@ -2,11 +2,8 @@
 
 namespace Better.Domain.Entities
 {
-    public class Bet
-    {
-        private static int nextId = 1;
-        [Required]
-        public int Id { get; } = nextId++;
+    public class Bet : Entity
+    {        
         [Required]
         public Event? Event { get; set; }
         [Required]
