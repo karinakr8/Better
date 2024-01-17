@@ -2,7 +2,7 @@
 
 ASP.NET Core MVC project includes:
 
-    - Loging (using Serilog)
+    - Logging (using Serilog)
     - Global Exception Handling Middleware
     - Generics
     - Swagger
