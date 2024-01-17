@@ -5,8 +5,6 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Better", "Better.csproj", "{3461E4E8-60EE-4F97-9EB7-332C3A082AD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Better.Infrastructure", "..\Better.Infrastructure\Better.Infrastructure.csproj", "{DD8A1FF2-0C37-47F3-A672-9F3BA80A8D98}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Better.Controllers", "..\Better.Controllers\Better.Controllers.csproj", "{61873D8A-3387-4A4B-94A3-BF1BA2A3655F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Better.Repositories", "..\Better.Repositories\Better.Repositories.csproj", "{CA62E9BD-46F4-42A6-95DF-4DE6E55BE5E9}"
@@ -27,10 +25,6 @@ Global
 		{3461E4E8-60EE-4F97-9EB7-332C3A082AD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3461E4E8-60EE-4F97-9EB7-332C3A082AD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3461E4E8-60EE-4F97-9EB7-332C3A082AD7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DD8A1FF2-0C37-47F3-A672-9F3BA80A8D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD8A1FF2-0C37-47F3-A672-9F3BA80A8D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD8A1FF2-0C37-47F3-A672-9F3BA80A8D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD8A1FF2-0C37-47F3-A672-9F3BA80A8D98}.Release|Any CPU.Build.0 = Release|Any CPU
 		{61873D8A-3387-4A4B-94A3-BF1BA2A3655F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{61873D8A-3387-4A4B-94A3-BF1BA2A3655F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61873D8A-3387-4A4B-94A3-BF1BA2A3655F}.Release|Any CPU.ActiveCfg = Release|Any CPU
