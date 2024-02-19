@@ -1,6 +1,6 @@
 # Better
 
-ASP.NET Core MVC project includes:
+ASP.NET Core project includes:
 
     - Logging (using Serilog)
     - Global Exception Handling Middleware
